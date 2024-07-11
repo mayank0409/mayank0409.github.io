@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Team Management</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        height: 100vh;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 20px;
+        box-sizing: border-box;
+      }
+
+      #container {
+        display: flex;
+        gap: 20px;
+      }
+
+      .team {
+        width: 250px;
+        padding: 10px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .team-header {
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 10px;
+      }
+
+      .team-content {
+        min-height: 150px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        padding: 5px;
+        background-color: #fafafa;
+        margin-bottom: 10px;
+        overflow: auto;
+      }
+
+      .player-card {
+        background-color: #f9f9f9;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        padding: 10px;
+        margin: 5px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+      }
+
+      .player-card.dragging {
+        opacity: 0.5;
+      }
+
+      .team-points {
+        margin-bottom: 10px;
+      }
+
+      .team-points span {
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      .team-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .team-table th,
+      .team-table td {
+        border: 1px solid #ddd;
+        padding: 5px;
+        text-align: left;
+      }
+
+      .team-table th {
+        background-color: #f4f4f4;
+      }
+
+      #randomPlayer {
+        margin-bottom: 20px;
+      }
+
+      #randomPlayer button {
+        margin-bottom: 10px;
+      }
+
+      .delete-button {
+        background-color: #e74c3c;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        padding: 5px 10px;
+        cursor: pointer;
+        font-size: 12px;
+      }
+
+      .delete-button:hover {
+        background-color: #c0392b;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <div class="team" id="teamMayank">
+        <h2 class="team-header">Mayank</h2>
+        <div class="team-points">
+          <span>Points: <span id="pointsMayank">10000</span></span>
+        </div>
+        <div
+          class="team-content"
+          ondrop="drop(event)"
+          ondragover="allowDrop(event)"
+        >
+          <p>Drag players here</p>
+        </div>
+        <h3>Team Roster</h3>
+        <table class="team-table">
+          <thead>
+            <tr>
+              <th>Player</th>
+              <th>Points</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="teamMayankRoster">
+            <!-- Roster will be dynamically added here -->
+          </tbody>
+        </table>
+      </div>
+
+      <div class="team" id="teamHarsh">
+        <h2 class="team-header">Harsh</h2>
+        <div class="team-points">
+          <span>Points: <span id="pointsHarsh">10000</span></span>
+        </div>
+        <div
+          class="team-content"
+          ondrop="drop(event)"
+          ondragover="allowDrop(event)"
+        >
+          <p>Drag players here</p>
+        </div>
+        <h3>Team Roster</h3>
+        <table class="team-table">
+          <thead>
+            <tr>
+              <th>Player</th>
+              <th>Points</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="teamHarshRoster">
+            <!-- Roster will be dynamically added here -->
+          </tbody>
+        </table>
+      </div>
+
+      <div class="team" id="teamMani">
+        <h2 class="team-header">Mani</h2>
+        <div class="team-points">
+          <span>Points: <span id="pointsMani">10000</span></span>
+        </div>
+        <div
+          class="team-content"
+          ondrop="drop(event)"
+          ondragover="allowDrop(event)"
+        >
+          <p>Drag players here</p>
+        </div>
+        <h3>Team Roster</h3>
+        <table class="team-table">
+          <thead>
+            <tr>
+              <th>Player</th>
+              <th>Points</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="teamManiRoster">
+            <!-- Roster will be dynamically added here -->
+          </tbody>
+        </table>
+      </div>
+
+      <div class="team" id="teamPrateek">
+        <h2 class="team-header">Prateek</h2>
+        <div class="team-points">
+          <span>Points: <span id="pointsPrateek">10000</span></span>
+        </div>
+        <div
+          class="team-content"
+          ondrop="drop(event)"
+          ondragover="allowDrop(event)"
+        >
+          <p>Drag players here</p>
+        </div>
+        <h3>Team Roster</h3>
+        <table class="team-table">
+          <thead>
+            <tr>
+              <th>Player</th>
+              <th>Points</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="teamPrateekRoster">
+            <!-- Roster will be dynamically added here -->
+          </tbody>
+        </table>
+      </div>
+
+      <div id="players">
+        <h2>Available Players</h2>
+        <div id="randomPlayer">
+          <button onclick="generateRandomPlayer()">
+            Generate Random Player
+          </button>
+          <div id="randomPlayerName"></div>
+        </div>
+        <div id="playerList">
+          <!-- Player list will be dynamically added here -->
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const defaultTeams = {
+        teamMayank: { name: 'Mayank', points: 10000, players: [] },
+        teamHarsh: { name: 'Harsh', points: 10000, players: [] },
+        teamMani: { name: 'Mani', points: 10000, players: [] },
+        teamPrateek: { name: 'Prateek', points: 10000, players: [] },
+      };
+
+      const initialPlayers = [
+        { id: 'player1', name: 'Akshay' },
+        { id: 'player2', name: 'Ligin' },
+        { id: 'player3', name: 'Ajay' },
+        { id: 'player4', name: 'Aditya' },
+        { id: 'player5', name: 'Ajitesh' },
+        { id: 'player6', name: 'Amol' },
+        { id: 'player7', name: 'Aniket' },
+        { id: 'player8', name: 'Anirudh' },
+        { id: 'player9', name: 'Deepak' },
+        { id: 'player10', name: 'Hari' },
+        { id: 'player11', name: 'Jordan' },
+        { id: 'player12', name: 'Mohit' },
+        { id: 'player13', name: 'Nitin' },
+        { id: 'player14', name: 'Paolo' },
+        { id: 'player15', name: 'Parth' },
+        { id: 'player16', name: 'Saurabh' },
+        { id: 'player17', name: 'Snehal' },
+        { id: 'player18', name: 'Sravan' },
+        { id: 'player19', name: 'Venkatesh' },
+        { id: 'player20', name: 'Aadesh' },
+        { id: 'player21', name: 'Ajinkya' },
+        { id: 'player22', name: 'Ayush' },
+        { id: 'player23', name: 'Jigar' },
+        { id: 'player24', name: 'Komal' },
+        { id: 'player25', name: 'Priyanka' },
+        { id: 'player26', name: 'Sid' },
+      ];
+
+      let teams = JSON.parse(localStorage.getItem('teams')) || defaultTeams;
+      let availablePlayers =
+        JSON.parse(localStorage.getItem('availablePlayers')) || initialPlayers;
+
+      function allowDrop(ev) {
+        ev.preventDefault();
+      }
+
+      function drag(ev) {
+        ev.dataTransfer.setData('text/plain', ev.target.id);
+        ev.target.classList.add('dragging');
+      }
+
+      function drop(ev) {
+        ev.preventDefault();
+        const playerId = ev.dataTransfer.getData('text/plain');
+        const playerElement = document.getElementById(playerId);
+        const teamContent = ev.target.closest('.team-content');
+        if (teamContent && !teamContent.contains(playerElement)) {
+          const teamId = teamContent.parentElement.id;
+          const playerName = playerElement.textContent;
+
+          const points = parseInt(prompt(`Enter points for ${playerName}:`));
+          if (isNaN(points) || points <= 0) {
+            alert('Invalid points. Try again.');
+            playerElement.classList.remove('dragging');
+            return;
+          }
+
+          const pointsElement = document.getElementById(
+            `points${teamId.charAt(4).toUpperCase() + teamId.slice(5)}`
+          );
+          if (!pointsElement) {
+            alert('Error: Points element not found.');
+            playerElement.classList.remove('dragging');
+            return;
+          }
+
+          if (teams[teamId].points >= points) {
+            teams[teamId].points -= points;
+            pointsElement.textContent = teams[teamId].points;
+
+            // Add player to team roster table
+            const tableBody = document.getElementById(`${teamId}Roster`);
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                        <td>${playerName}</td>
+                        <td>${points}</td>
+                        <td><button class="delete-button" onclick="removePlayerFromTeam('${playerId}', '${teamId}')">Remove</button></td>
+                    `;
+            tableBody.appendChild(row);
+
+            // Add player to the team's players list
+            teams[teamId].players.push({
+              id: playerId,
+              name: playerName,
+              points: points,
+            });
+
+            // Remove the player from availablePlayers
+            availablePlayers = availablePlayers.filter(
+              (player) => player.id !== playerId
+            );
+
+            // Update the localStorage
+            localStorage.setItem('teams', JSON.stringify(teams));
+            localStorage.setItem(
+              'availablePlayers',
+              JSON.stringify(availablePlayers)
+            );
+
+            // Update the player list
+            updatePlayerList();
+
+            playerElement.classList.remove('dragging');
+          } else {
+            alert('Not enough points.');
+          }
+        }
+      }
+
+      function generateRandomPlayer() {
+        if (availablePlayers.length === 0) {
+          alert('No more players available.');
+          return;
+        }
+        const randomIndex = Math.floor(Math.random() * availablePlayers.length);
+        const randomPlayer = availablePlayers[randomIndex];
+        document.getElementById(
+          'randomPlayerName'
+        ).textContent = `Current Player for Bidding: ${randomPlayer.name}`;
+      }
+
+      function updatePlayerList() {
+        const playerList = document.getElementById('playerList');
+        playerList.innerHTML = '';
+        availablePlayers.forEach((player) => {
+          const playerCard = document.createElement('div');
+          playerCard.className = 'player-card';
+          playerCard.textContent = player.name;
+          playerCard.id = player.id;
+          playerCard.draggable = true;
+          playerCard.ondragstart = drag;
+          playerCard.ondragend = () => playerCard.classList.remove('dragging');
+          playerList.appendChild(playerCard);
+        });
+      }
+
+      function removePlayerFromTeam(playerId, teamId) {
+        const team = teams[teamId];
+        const playerIndex = team.players.findIndex(
+          (player) => player.id === playerId
+        );
+        if (playerIndex === -1) {
+          alert('Player not found in the team.');
+          return;
+        }
+
+        const player = team.players[playerIndex];
+        const points = player.points;
+        const playerName = player.name;
+
+        // Remove player from the team's players list
+        team.players.splice(playerIndex, 1);
+
+        // Add player back to availablePlayers
+        availablePlayers.push({ id: playerId, name: playerName });
+
+        // Update points for the team
+        team.points += points;
+        document.getElementById(
+          `points${teamId.charAt(4).toUpperCase() + teamId.slice(5)}`
+        ).textContent = team.points;
+
+        // Remove the player from the team's roster table
+        const tableBody = document.getElementById(`${teamId}Roster`);
+        const rows = Array.from(tableBody.rows);
+        rows.forEach((row) => {
+          if (row.cells[0].textContent === playerName) {
+            tableBody.removeChild(row);
+          }
+        });
+
+        // Update the localStorage
+        localStorage.setItem('teams', JSON.stringify(teams));
+        localStorage.setItem(
+          'availablePlayers',
+          JSON.stringify(availablePlayers)
+        );
+
+        // Update the player list
+        updatePlayerList();
+      }
+
+      function loadTeams() {
+        for (const teamId in teams) {
+          const team = teams[teamId];
+          const pointsElement = document.getElementById(
+            `points${teamId.charAt(4).toUpperCase() + teamId.slice(5)}`
+          );
+          pointsElement.textContent = team.points;
+          const tableBody = document.getElementById(`${teamId}Roster`);
+          tableBody.innerHTML = '';
+          team.players.forEach((player) => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                        <td>${player.name}</td>
+                        <td>${player.points}</td>
+                        <td><button class="delete-button" onclick="removePlayerFromTeam('${player.id}', '${teamId}')">Remove</button></td>
+                    `;
+            tableBody.appendChild(row);
+          });
+        }
+      }
+
+      window.onload = () => {
+        updatePlayerList();
+        loadTeams();
+      };
+    </script>
+  </body>
+</html>
