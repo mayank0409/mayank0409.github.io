@@ -116,7 +116,9 @@
       <div class="team" id="teamMayank">
         <h2 class="team-header">Mayank</h2>
         <div class="team-points">
-          <span>Points: <span id="pointsMayank">7000</span></span>
+          <span>Points Remaining: <span id="pointsMayank">7000</span></span>
+          <span>Players Remaining: <span id="playersMayank">7</span></span>
+          <span>Max Bid: <span id="bidMayank">6400</span></span>
         </div>
         <div
           class="team-content"
@@ -143,7 +145,9 @@
       <div class="team" id="teamHarsh">
         <h2 class="team-header">Harsh</h2>
         <div class="team-points">
-          <span>Points: <span id="pointsHarsh">7000</span></span>
+          <span>Points Remaining: <span id="pointsHarsh">7000</span></span>
+          <span>Players Remaining: <span id="playersHarsh">7</span></span>
+          <span>Max Bid: <span id="bidHarsh">6400</span></span>
         </div>
         <div
           class="team-content"
@@ -170,7 +174,9 @@
       <div class="team" id="teamMani">
         <h2 class="team-header">Mani</h2>
         <div class="team-points">
-          <span>Points: <span id="pointsMani">7000</span></span>
+          <span>Points Remaining: <span id="pointsMani">7000</span></span>
+          <span>Players Remaining: <span id="playersMani">7</span></span>
+          <span>Max Bid: <span id="bidMani">6400</span></span>
         </div>
         <div
           class="team-content"
@@ -197,7 +203,9 @@
       <div class="team" id="teamPrateek">
         <h2 class="team-header">Prateek</h2>
         <div class="team-points">
-          <span>Points: <span id="pointsPrateek">7000</span></span>
+          <span>Points Remaining: <span id="pointsPrateek">7000</span></span>
+          <span>Players Remaining: <span id="playersPrateek">7</span></span>
+          <span>Max Bid: <span id="bidPrateek">6400</span></span>
         </div>
         <div
           class="team-content"
@@ -345,6 +353,43 @@
               JSON.stringify(availablePlayers)
             );
 
+            document.getElementById(
+              `players${teams[teamId].name}`
+            ).textContent =
+              7 -
+              JSON.parse(localStorage.getItem('teams'))[
+                `team${teams[teamId].name}`
+              ].players.length;
+
+            document.getElementById(`bid${teams[teamId].name}`).textContent =
+              JSON.parse(localStorage.getItem('teams'))[
+                `team${teams[teamId].name}`
+              ].points -
+              (7 -
+                JSON.parse(localStorage.getItem('teams'))[
+                  `team${teams[teamId].name}`
+                ].players.length -
+                1) *
+                100;
+
+            console.log(
+              JSON.parse(localStorage.getItem('teams'))[
+                `team${teams[teamId].name}`
+              ]
+            );
+            if (
+              JSON.parse(localStorage.getItem('teams'))[
+                `team${teams[teamId].name}`
+              ].players.length === 7
+            ) {
+              document.getElementById(
+                `team${
+                  JSON.parse(localStorage.getItem('teams'))[
+                    `team${teams[teamId].name}`
+                  ].name
+                }`
+              ).style.backgroundColor = '#bfebdc';
+            }
             // Update the player list
             updatePlayerList();
 
@@ -424,6 +469,36 @@
           JSON.stringify(availablePlayers)
         );
 
+        document.getElementById(`players${teams[teamId].name}`).textContent =
+          7 -
+          JSON.parse(localStorage.getItem('teams'))[`team${teams[teamId].name}`]
+            .players.length;
+
+        document.getElementById(`bid${teams[teamId].name}`).textContent =
+          JSON.parse(localStorage.getItem('teams'))[`team${teams[teamId].name}`]
+            .points -
+          (7 -
+            JSON.parse(localStorage.getItem('teams'))[
+              `team${teams[teamId].name}`
+            ].players.length -
+            1) *
+            100;
+
+        console.log(
+          JSON.parse(localStorage.getItem('teams'))[`team${teams[teamId].name}`]
+        );
+        if (
+          JSON.parse(localStorage.getItem('teams'))[`team${teams[teamId].name}`]
+            .players.length === 7
+        ) {
+          document.getElementById(
+            `team${
+              JSON.parse(localStorage.getItem('teams'))[
+                `team${teams[teamId].name}`
+              ].name
+            }`
+          ).style.backgroundColor = '#bfebdc';
+        }
         // Update the player list
         updatePlayerList();
       }
