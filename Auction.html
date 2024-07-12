@@ -116,7 +116,7 @@
       <div class="team" id="teamMayank">
         <h2 class="team-header">Mayank</h2>
         <div class="team-points">
-          <span>Points: <span id="pointsMayank">10000</span></span>
+          <span>Points: <span id="pointsMayank">7000</span></span>
         </div>
         <div
           class="team-content"
@@ -143,7 +143,7 @@
       <div class="team" id="teamHarsh">
         <h2 class="team-header">Harsh</h2>
         <div class="team-points">
-          <span>Points: <span id="pointsHarsh">10000</span></span>
+          <span>Points: <span id="pointsHarsh">7000</span></span>
         </div>
         <div
           class="team-content"
@@ -170,7 +170,7 @@
       <div class="team" id="teamMani">
         <h2 class="team-header">Mani</h2>
         <div class="team-points">
-          <span>Points: <span id="pointsMani">10000</span></span>
+          <span>Points: <span id="pointsMani">7000</span></span>
         </div>
         <div
           class="team-content"
@@ -197,7 +197,7 @@
       <div class="team" id="teamPrateek">
         <h2 class="team-header">Prateek</h2>
         <div class="team-points">
-          <span>Points: <span id="pointsPrateek">10000</span></span>
+          <span>Points: <span id="pointsPrateek">7000</span></span>
         </div>
         <div
           class="team-content"
@@ -237,37 +237,41 @@
 
     <script>
       const defaultTeams = {
-        teamMayank: { name: 'Mayank', points: 6000, players: [] },
-        teamHarsh: { name: 'Harsh', points: 6000, players: [] },
-        teamMani: { name: 'Mani', points: 6000, players: [] },
-        teamPrateek: { name: 'Prateek', points: 6000, players: [] },
+        teamMayank: { name: 'Mayank', points: 7000, players: [] },
+        teamHarsh: { name: 'Harsh', points: 7000, players: [] },
+        teamMani: { name: 'Mani', points: 7000, players: [] },
+        teamPrateek: { name: 'Prateek', points: 7000, players: [] },
       };
 
       const initialPlayers = [
         { id: 'player1', name: 'Akshay' },
         { id: 'player2', name: 'Ligin' },
-        { id: 'player7', name: 'Aniket' },
-        { id: 'player9', name: 'Deepak' },
+        { id: 'player3', name: 'Aniket' },
+        { id: 'player4', name: 'Deepak' },
         { id: 'player5', name: 'Ajitesh' },
-        { id: 'player16', name: 'Saurabh' },
-        { id: 'player18', name: 'Sravan' },
-        { id: 'player4', name: 'Aditya' },
-        { id: 'player10', name: 'Hari' },
-        { id: 'player8', name: 'Anirudh' },
-        { id: 'player13', name: 'Nitin' },
-        { id: 'player15', name: 'Parth' },
-        { id: 'player3', name: 'Ajay' },
-        { id: 'player6', name: 'Amol' },
-        { id: 'player14', name: 'Paolo' },
-        { id: 'player19', name: 'Venkatesh' },
-        { id: 'player11', name: 'Jordan' },
-        { id: 'player12', name: 'Mohit' },
-        { id: 'player23', name: 'Jigar' },
-        { id: 'player17', name: 'Snehal' },
-        { id: 'player22', name: 'Ayush' },
-        { id: 'player20', name: 'Aadesh' },
-        { id: 'player26', name: 'Sid' },
-        { id: 'player21', name: 'Ajinkya' },
+        { id: 'player6', name: 'Saurabh' },
+        { id: 'player7', name: 'Sravan' },
+        { id: 'player8', name: 'Aditya' },
+        { id: 'player9', name: 'Hari' },
+        { id: 'player10', name: 'Anirudh' },
+        { id: 'player11', name: 'Nitin' },
+        { id: 'player12', name: 'Parth' },
+        { id: 'player13', name: 'Ajay' },
+        { id: 'player14', name: 'Amol' },
+        { id: 'player15', name: 'Paolo' },
+        { id: 'player16', name: 'Venkatesh' },
+        { id: 'player17', name: 'Jordan' },
+        { id: 'player18', name: 'Mohit' },
+        { id: 'player19', name: 'Jigar' },
+        { id: 'player20', name: 'Snehal' },
+        { id: 'player21', name: 'Ayush' },
+        { id: 'player22', name: 'Aadesh' },
+        { id: 'player23', name: 'Sid' },
+        { id: 'player24', name: 'Mayuresh' },
+        { id: 'player25', name: 'Ravin' },
+        { id: 'player26', name: 'Ajinkya' },
+        { id: 'player27', name: 'Priyanka' },
+        { id: 'player28', name: 'Komal' },
       ];
 
       let teams = JSON.parse(localStorage.getItem('teams')) || defaultTeams;
