@@ -10,9 +10,9 @@
     />
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rubik+Mono+One&display=swap');
-
+      @import url('https://fonts.googleapis.com/css2?family=Edu+QLD+Beginner:wght@400..700&family=Pacifico&family=Winky+Rough:ital,wght@0,300..900;1,300..900&display=swap');
       body {
-        font-family: 'Rubik Mono One', sans-serif;
+        font-family: 'Winky Rough', sans-serif;
         background: linear-gradient(to right, #5f2c82, #49a09d);
         margin: 0;
         padding: 30px;
@@ -29,7 +29,7 @@
       }
 
       .logo {
-        height: 150px;
+        /* height: 150px; */
         width: 150px;
       }
 
@@ -240,11 +240,81 @@
       #clearData {
         cursor: pointer;
       }
+
+      /* Mobile responsiveness */
+      @media (max-width: 1200px) {
+        #container {
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+        .team,
+        #players {
+          width: 90%;
+          margin-bottom: 30px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        body {
+          padding: 15px;
+        }
+
+        .header {
+          flex-direction: column;
+          gap: 20px;
+          text-align: center;
+        }
+
+        .logo {
+          height: 100px;
+          width: 100px;
+        }
+
+        .main-heading {
+          font-size: 18px;
+        }
+
+        .team-header {
+          font-size: 12px;
+          padding: 6px;
+        }
+
+        .team-points span {
+          font-size: 12px;
+        }
+
+        .team-table th,
+        .team-table td {
+          font-size: 11px;
+          padding: 4px;
+        }
+
+        .player-card {
+          flex-direction: column;
+          align-items: flex-start;
+          font-size: 12px;
+        }
+
+        .delete-button {
+          margin-top: 6px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .main-heading {
+          font-size: 14px;
+        }
+
+        .team-table {
+          overflow-x: auto;
+          display: block;
+        }
+      }
     </style>
   </head>
   <body>
     <div class="header">
-      <img src="./ufl.jpg" class="logo" />
+      <img src="./ufl1.jpg" class="logo" />
       <h1 class="main-heading">Ultimate Frisbee League (North Park - 2025)</h1>
     </div>
 
@@ -535,7 +605,7 @@
                     `team${teams[teamId].name}`
                   ].name
                 }`
-              ).style.backgroundColor = '#bfebdc';
+              ).style.backgroundColor = '#ff000042';
             }
             // Update the player list
             updatePlayerList();
