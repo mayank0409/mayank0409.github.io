@@ -81,7 +81,7 @@
         flex-wrap: nowrap;
         gap: 30px;
         align-items: flex-start;
-        margin-top: 40px;
+        margin-top: 90px;
       }
 
       .team {
@@ -155,7 +155,7 @@
         cursor: grab;
         transition: all 0.2s ease;
         display: flex;
-        justify-content: space-between;
+        /* justify-content: space-between; */
         align-items: center;
         color: #fff;
       }
@@ -241,6 +241,14 @@
         cursor: pointer;
       }
 
+      .player-photo {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 10px;
+      }
+
       /* Mobile responsiveness */
       @media (max-width: 1200px) {
         #container {
@@ -313,17 +321,90 @@
     </style>
   </head>
   <body>
+    <!-- Modal for Enlarged Player Photo -->
+    <div
+      id="photoModal"
+      style="
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        flex-direction: column;
+      "
+    >
+      <img
+        id="modalImage"
+        src=""
+        style="
+          max-width: 90%;
+          max-height: 90%;
+          border-radius: 10px;
+          box-shadow: 0 0 20px #fff;
+          min-height: 50%;
+        "
+      />
+      <div style="margin-top: -10%">
+        <h1
+          style="
+            background: rgba(255, 76, 96, 0.8);
+            width: 70rem;
+            text-align: center;
+            font-size: 64px;
+            color: white;
+            -webkit-mask-image: linear-gradient(
+              to right,
+              transparent 0%,
+              black 20%,
+              black 80%,
+              transparent 100%
+            );
+            mask-image: linear-gradient(
+              to right,
+              transparent 0%,
+              black 20%,
+              black 80%,
+              transparent 100%
+            );
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+          "
+        ></h1>
+      </div>
+    </div>
+
     <div class="header">
-      <img src="./ufl1.jpg" class="logo" />
+      <img src="./UFLPics/ufl1.jpg" class="logo" />
       <h1 class="main-heading">Ultimate Frisbee League (North Park - 2025)</h1>
     </div>
 
     <div id="container">
       <div class="team" id="teamMayank">
+        <div
+          style="
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-top: -25%;
+          "
+        >
+          <img
+            src="./UFLPics/Mayank1.jpg"
+            alt="Mayank"
+            height="100px"
+            width="100px"
+            style="border-radius: 50%"
+          />
+        </div>
         <h2 class="team-header">Mayank</h2>
         <div class="team-points">
-          <span>Points Remaining: <span id="pointsMayank">8000</span></span>
-          <span>Players Remaining: <span id="playersMayank">8</span></span>
+          <span>Points Remaining: <span id="pointsMayank">7000</span></span>
+          <span>Players Remaining: <span id="playersMayank">7</span></span>
           <span>Max Bid: <span id="bidMayank">7300</span></span>
         </div>
         <div
@@ -349,10 +430,26 @@
       </div>
 
       <div class="team" id="teamHarsh">
+        <div
+          style="
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-top: -25%;
+          "
+        >
+          <img
+            src="./UFLPics/Harsh.jpg"
+            alt="Harsh"
+            height="100px"
+            width="100px"
+            style="border-radius: 50%"
+          />
+        </div>
         <h2 class="team-header">Harsh</h2>
         <div class="team-points">
-          <span>Points Remaining: <span id="pointsHarsh">8000</span></span>
-          <span>Players Remaining: <span id="playersHarsh">8</span></span>
+          <span>Points Remaining: <span id="pointsHarsh">7000</span></span>
+          <span>Players Remaining: <span id="playersHarsh">7</span></span>
           <span>Max Bid: <span id="bidHarsh">7300</span></span>
         </div>
         <div
@@ -378,10 +475,26 @@
       </div>
 
       <div class="team" id="teamMani">
+        <div
+          style="
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-top: -25%;
+          "
+        >
+          <img
+            src="./UFLPics/Mani.jpg"
+            alt="Mani"
+            height="100px"
+            width="100px"
+            style="border-radius: 50%"
+          />
+        </div>
         <h2 class="team-header">Mani</h2>
         <div class="team-points">
-          <span>Points Remaining: <span id="pointsMani">8000</span></span>
-          <span>Players Remaining: <span id="playersMani">8</span></span>
+          <span>Points Remaining: <span id="pointsMani">7000</span></span>
+          <span>Players Remaining: <span id="playersMani">7</span></span>
           <span>Max Bid: <span id="bidMani">7300</span></span>
         </div>
         <div
@@ -407,10 +520,26 @@
       </div>
 
       <div class="team" id="teamHari">
+        <div
+          style="
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-top: -25%;
+          "
+        >
+          <img
+            src="./UFLPics/Hari1.jpg"
+            alt="Hari"
+            height="100px"
+            width="100px"
+            style="border-radius: 50%"
+          />
+        </div>
         <h2 class="team-header">Hari</h2>
         <div class="team-points">
-          <span>Points Remaining: <span id="pointsHari">8000</span></span>
-          <span>Players Remaining: <span id="playersHari">8</span></span>
+          <span>Points Remaining: <span id="pointsHari">7000</span></span>
+          <span>Players Remaining: <span id="playersHari">7</span></span>
           <span>Max Bid: <span id="bidHari">7300</span></span>
         </div>
         <div
@@ -455,43 +584,177 @@
 
     <script>
       const defaultTeams = {
-        teamMayank: { name: 'Mayank', points: 8000, players: [] },
-        teamHarsh: { name: 'Harsh', points: 8000, players: [] },
-        teamMani: { name: 'Mani', points: 8000, players: [] },
-        teamHari: { name: 'Hari', points: 8000, players: [] },
+        teamMayank: { name: 'Mayank', points: 7000, players: [] },
+        teamHarsh: { name: 'Harsh', points: 7000, players: [] },
+        teamMani: { name: 'Mani', points: 7000, players: [] },
+        teamHari: { name: 'Hari', points: 7000, players: [] },
       };
 
+      const picsBase = './UFLPics';
+
       const initialPlayers = [
-        { id: 'player1', name: 'Deepak' },
-        { id: 'player2', name: 'Prateek' },
-        { id: 'player3', name: 'Ajitesh' },
-        { id: 'player4', name: 'Venkat' },
-        { id: 'player5', name: 'Tapan' },
-        { id: 'player6', name: 'Akshay' },
-        { id: 'player7', name: 'Aayush' },
-        { id: 'player8', name: 'Ligin' },
-        { id: 'player9', name: 'Nitin' },
-        { id: 'player10', name: 'Aadesh' },
-        { id: 'player11', name: 'Siddharth' },
-        { id: 'player12', name: 'Aditya Deshmukh' },
-        { id: 'player13', name: 'Aditya Sant' },
-        { id: 'player14', name: 'Amol' },
-        { id: 'player24', name: 'Ankit Jain' },
-        { id: 'player15', name: 'Apurv' },
-        { id: 'player16', name: 'Daksha' },
-        { id: 'player17', name: 'Deva' },
-        { id: 'player18', name: 'Hrushabh' },
-        { id: 'player19', name: 'Kalyani' },
-        { id: 'player20', name: 'Manan' },
-        { id: 'player21', name: 'Mayuresh' },
-        { id: 'player22', name: 'Mohit' },
-        { id: 'player23', name: 'Pradeep Reddy' },
-        { id: 'player25', name: 'Prathamesh' },
-        { id: 'player26', name: 'Saurabh' },
-        { id: 'player27', name: 'Shiva' },
-        { id: 'player28', name: 'Sravan' },
-        { id: 'player29', name: 'Vaanya' },
+        {
+          id: 'player1',
+          name: 'Deepak',
+          photo: 'deepak.jpg',
+        },
+        {
+          id: 'player2',
+          name: 'Prateek',
+          photo: 'Prateek.jpg',
+        },
+        {
+          id: 'player3',
+          name: 'Ajitesh',
+          photo: 'Ajitesh.jpg',
+        },
+        {
+          id: 'player4',
+          name: 'Venkatesh',
+          photo: 'Venkatesh.jpg',
+        },
+        {
+          id: 'player5',
+          name: 'Tapan',
+          photo: 'Tapan.JPG',
+        },
+        {
+          id: 'player6',
+          name: 'Akshay',
+          photo: 'Akshay.jpg',
+        },
+        {
+          id: 'player7',
+          name: 'Nishith',
+          photo: 'Nishith.jpg',
+        },
+        {
+          id: 'player8',
+          name: 'Ligin',
+          photo: 'Ligin.jpg',
+        },
+        {
+          id: 'player9',
+          name: 'Nitin',
+          photo: 'Nitin.JPG',
+        },
+        {
+          id: 'player10',
+          name: 'Siddharth',
+          photo: 'Sid.jpg',
+        },
+        {
+          id: 'player11',
+          name: 'Aditya Deshmukh',
+          photo: 'Aditya.jpg',
+        },
+        {
+          id: 'player12',
+          name: 'Aditya Sant',
+          photo: 'Aditya_Sant.jpg',
+        },
+        {
+          id: 'player13',
+          name: 'Ankit Jain',
+          photo: 'Ankit.jpg',
+        },
+        {
+          id: 'player14',
+          name: 'Apurv',
+          photo: 'Apurv.jpg',
+        },
+        {
+          id: 'player15',
+          name: 'Daksha',
+          photo: 'Daksha.jpeg',
+        },
+        {
+          id: 'player16',
+          name: 'Hrushabh',
+          photo: 'Hrushabh.jpg',
+        },
+        {
+          id: 'player17',
+          name: 'Kalyani',
+          photo: 'Kalyani_Jagdale.jpg',
+        },
+        {
+          id: 'player18',
+          name: 'Manan',
+          photo: 'Manan.JPG',
+        },
+        {
+          id: 'player19',
+          name: 'Mayuresh',
+          photo: 'Mayuresh.jpg',
+        },
+        {
+          id: 'player20',
+          name: 'Mohit',
+          photo: 'mohit.jpg',
+        },
+        {
+          id: 'player21',
+          name: 'Prathamesh',
+          photo: 'Prathamesh_Save.jpg',
+        },
+        {
+          id: 'player22',
+          name: 'Saurabh',
+          photo: 'Saurabh.jpg',
+        },
+        {
+          id: 'player23',
+          name: 'Shiva',
+          photo: 'Shiva.jpg',
+        },
+        {
+          id: 'player24',
+          name: 'Sravan',
+          photo: 'SRA1.jpg',
+        },
+        {
+          id: 'player25',
+          name: 'Vaanya',
+          photo: 'Vaanya.jpg',
+        },
+        {
+          id: 'player26',
+          name: 'Nihar',
+          photo: 'Nihar.jpg',
+        },
+        {
+          id: 'player27',
+          name: 'Deva',
+          photo: 'Dev.jpg',
+        },
+        {
+          id: 'player28',
+          name: 'Pradeep Reddy',
+          photo: 'Pradeep.JPG',
+        },
       ];
+
+      // Open modal with clicked photo
+      document.addEventListener('click', function (e) {
+        if (e.target.classList.contains('player-photo')) {
+          const modal = document.getElementById('photoModal');
+          const modalImage = document.getElementById('modalImage');
+          const modalName = document.querySelector('h1');
+          modalName.innerText = e.target.alt;
+          modalImage.src = e.target.src;
+          modal.style.display = 'flex';
+        }
+      });
+
+      // Close modal when clicking outside image
+      document
+        .getElementById('photoModal')
+        .addEventListener('click', function (e) {
+          if (e.target.id === 'photoModal') {
+            this.style.display = 'none';
+          }
+        });
 
       let teams = JSON.parse(localStorage.getItem('teams')) || defaultTeams;
       let availablePlayers =
@@ -541,14 +804,14 @@
             const tableBody = document.getElementById(`${teamId}Roster`);
             const row = document.createElement('tr');
             row.innerHTML = `
-                              <td><div style="display: flex; justify-content: center;">${playerName}</div></td>
-                              <td><div style="display: flex; justify-content: center;">${points}</div></td>
-                              <td><div style="display: flex; justify-content: center;"><button class="delete-button" onclick="removePlayerFromTeam('${playerId}', '${teamId}')">
-        <i class="fas fa-trash-alt"></i>
-      </button></div></td>
+                                <td><div style="display: flex; align-items: center;">${playerName}</div></td>
+                                <td><div style="display: flex; align-items: center;">${points}</div></td>
+                                <td><div style="display: flex; align-items: center;"><button class="delete-button" onclick="removePlayerFromTeam('${playerId}', '${teamId}')">
+          <i class="fas fa-trash-alt"></i>
+        </button></div></td>
 
 
-                          `;
+                            `;
             tableBody.appendChild(row);
 
             // Add player to the team's players list
@@ -573,7 +836,7 @@
             document.getElementById(
               `players${teams[teamId].name}`
             ).textContent =
-              8 -
+              7 -
               JSON.parse(localStorage.getItem('teams'))[
                 `team${teams[teamId].name}`
               ].players.length;
@@ -582,22 +845,17 @@
               JSON.parse(localStorage.getItem('teams'))[
                 `team${teams[teamId].name}`
               ].points -
-              (8 -
+              (7 -
                 JSON.parse(localStorage.getItem('teams'))[
                   `team${teams[teamId].name}`
                 ].players.length -
                 1) *
                 100;
 
-            console.log(
-              JSON.parse(localStorage.getItem('teams'))[
-                `team${teams[teamId].name}`
-              ]
-            );
             if (
               JSON.parse(localStorage.getItem('teams'))[
                 `team${teams[teamId].name}`
-              ].players.length === 8
+              ].players.length === 7
             ) {
               document.getElementById(
                 `team${
@@ -638,6 +896,10 @@
           playerCard.textContent = player.name;
           playerCard.id = player.id;
           playerCard.draggable = true;
+          playerCard.innerHTML = `
+        <img src="${picsBase}/${player.photo}" alt="${player.name}" class="player-photo" />
+        <span>${player.name}</span>
+      `;
           playerCard.ondragstart = drag;
           playerCard.ondragend = () => playerCard.classList.remove('dragging');
           playerList.appendChild(playerCard);
@@ -687,26 +949,23 @@
         );
 
         document.getElementById(`players${teams[teamId].name}`).textContent =
-          8 -
+          7 -
           JSON.parse(localStorage.getItem('teams'))[`team${teams[teamId].name}`]
             .players.length;
 
         document.getElementById(`bid${teams[teamId].name}`).textContent =
           JSON.parse(localStorage.getItem('teams'))[`team${teams[teamId].name}`]
             .points -
-          (8 -
+          (7 -
             JSON.parse(localStorage.getItem('teams'))[
               `team${teams[teamId].name}`
             ].players.length -
             1) *
             100;
 
-        console.log(
-          JSON.parse(localStorage.getItem('teams'))[`team${teams[teamId].name}`]
-        );
         if (
           JSON.parse(localStorage.getItem('teams'))[`team${teams[teamId].name}`]
-            .players.length === 8
+            .players.length === 7
         ) {
           document.getElementById(
             `team${
@@ -733,25 +992,20 @@
             `bid${teamId.charAt(4).toUpperCase() + teamId.slice(5)}`
           );
 
-          console.log(
-            parseInt(pointsElement.textContent) -
-              (8 - team.players.length - 1) * 100
-          );
-
           pointsElement.textContent = team.points;
-          playersRemaining.textContent = 8 - team.players.length;
+          playersRemaining.textContent = 7 - team.players.length;
           maxBid.textContent =
             parseInt(pointsElement.textContent) -
-            (8 - team.players.length - 1) * 100;
+            (7 - team.players.length - 1) * 100;
           const tableBody = document.getElementById(`${teamId}Roster`);
           tableBody.innerHTML = '';
           team.players.forEach((player) => {
             const row = document.createElement('tr');
             row.innerHTML = `
-                              <td><div style="display: flex; justify-content: center;">${player.name}</div></td>
-                              <td><div style="display: flex; justify-content: center;">${player.points}</div></td>
-                              <td><div style="display: flex; justify-content: center;"><button class="delete-button" onclick="removePlayerFromTeam('${player.id}', '${teamId}')"><i class="fas fa-trash-alt"></i></button></div></td>
-                          `;
+                                <td><div style="display: flex; align-items: center;">${player.name}</div></td>
+                                <td><div style="display: flex; align-items: center;">${player.points}</div></td>
+                                <td><div style="display: flex; align-items: center;"><button class="delete-button" onclick="removePlayerFromTeam('${player.id}', '${teamId}')"><i class="fas fa-trash-alt"></i></button></div></td>
+                            `;
             tableBody.appendChild(row);
           });
         }
