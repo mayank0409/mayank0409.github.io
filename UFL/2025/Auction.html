@@ -735,6 +735,11 @@
         },
       ];
 
+      function getPhotoById(playerId) {
+  const player = initialPlayers.find(p => p.id === playerId);
+  return player ? player.photo : null;
+}
+
       // Open modal with clicked photo
       document.addEventListener('click', function (e) {
         if (e.target.classList.contains('player-photo')) {
@@ -917,14 +922,18 @@
         }
 
         const player = team.players[playerIndex];
+        console.log('player', player)
         const points = player.points;
         const playerName = player.name;
 
         // Remove player from the team's players list
         team.players.splice(playerIndex, 1);
 
+        const photo = getPhotoById(playerId);
+
+
         // Add player back to availablePlayers
-        availablePlayers.push({ id: playerId, name: playerName });
+        availablePlayers.push({ id: playerId, name: playerName, photo });
 
         // Update points for the team
         team.points += points;
