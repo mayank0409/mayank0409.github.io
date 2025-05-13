@@ -51,6 +51,31 @@
             margin-top: 20%;
             flex-direction: column;
         }
+        @keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+#countdown {
+  animation: pulse 1s infinite;
+}
+@media (max-width: 600px) {
+  .header {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .main-heading {
+    font-size: 18px;
+    text-align: center;
+    line-height: 2;
+  }
+
+  #countdown {
+    font-size: 2rem;
+  }
+}
   </style>
 </head>
 <body>
