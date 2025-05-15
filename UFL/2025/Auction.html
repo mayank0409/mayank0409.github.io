@@ -1,1041 +1,1062 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>UFL 2025 - Auction</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    />
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rubik+Mono+One&display=swap');
-      @import url('https://fonts.googleapis.com/css2?family=Edu+QLD+Beginner:wght@400..700&family=Pacifico&family=Winky+Rough:ital,wght@0,300..900;1,300..900&display=swap');
-      body {
-        font-family: 'Winky Rough', sans-serif;
-        background: linear-gradient(to right, #5f2c82, #49a09d);
-        margin: 0;
-        padding: 30px;
-        color: #fff;
-        min-height: 100vh;
-        overflow-x: auto;
-      }
-
-      .header {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 50px;
-      }
-
-      .logo {
-        /* height: 150px; */
-        width: 150px;
-      }
-
-      .main-heading {
-        font-family: 'Press Start 2P', cursive;
-        font-size: 28px;
-        text-align: center;
-        margin-bottom: 30px;
-        color: #ffdb58;
-        animation: flicker 1.5s infinite alternate;
-        text-shadow: 2px 2px 0 #000, 0 0 10px #ffdb58;
-      }
-
-      .team {
-        animation: slideIn 0.8s ease-in-out;
-      }
-
-      @keyframes slideIn {
-        from {
-          transform: translateY(30px);
-          opacity: 0;
-        }
-        to {
-          transform: translateY(0);
-          opacity: 1;
-        }
-      }
-
-      .player-card:hover {
-        background-color: #333;
-        transform: translateX(10px) scale(1.05);
-        box-shadow: 0 0 10px #12c2e9;
-      }
-
-      /* Flicker Animation */
-      @keyframes flicker {
-        0% {
-          opacity: 1;
-          text-shadow: 2px 2px 0 #000, 0 0 20px #ffdb58, 0 0 30px #ffdb58;
-        }
-        100% {
-          opacity: 0.8;
-          text-shadow: 2px 2px 0 #000, 0 0 5px #ffdb58;
-        }
-      }
-
-      #container {
-        display: flex;
-        flex-wrap: nowrap;
-        gap: 30px;
-        align-items: flex-start;
-        margin-top: 90px;
-      }
-
-      .team {
-        width: 280px;
-        background: #111;
-        border: 2px solid #ff4c60;
-        border-radius: 15px;
-        box-shadow: 0 0 15px rgba(255, 76, 96, 0.5);
-        padding: 15px;
-        transition: transform 0.3s ease;
-      }
-
-      .team:hover {
-        transform: scale(1.03);
-      }
-
-      .team-header {
-        font-family: 'Press Start 2P', cursive;
-        font-size: 16px;
-        text-align: center;
-        background: linear-gradient(90deg, #ff4c60, #ff9671);
-        padding: 10px;
-        border-radius: 8px;
-        margin-bottom: 15px;
-        color: #000;
-      }
-
-      .team-points span {
-        display: block;
-        margin-bottom: 6px;
-        font-size: 14px;
-      }
-
-      .team-content {
-        background-color: #222;
-        border: 2px dashed #ff4c60;
-        border-radius: 10px;
-        padding: 10px;
-        min-height: 80px;
-        text-align: center;
-        color: #aaa;
-        margin-bottom: 15px;
-        margin: 50px 0;
-      }
-
-      .team-table {
-        width: 100%;
-        border-collapse: collapse;
-        color: #fff;
-        font-size: 13px;
-      }
-
-      .team-table th,
-      .team-table td {
-        border: 1px solid #ff9671;
-        padding: 6px;
-        text-align: left;
-      }
-
-      .team-table th {
-        background: #ff9671;
-        color: #000;
-      }
-
-      .player-card {
-        background: #292929;
-        border: 2px solid #12c2e9;
-        border-radius: 10px;
-        padding: 10px;
-        margin: 8px 0;
-        cursor: grab;
-        transition: all 0.2s ease;
-        display: flex;
-        /* justify-content: space-between; */
-        align-items: center;
-        color: #fff;
-      }
-
-      .player-card:hover {
-        background-color: #333;
-        transform: translateX(5px);
-      }
-
-      .player-card.dragging {
-        opacity: 0.5;
-        border-style: dotted;
-        transform: rotate(2deg);
-      }
-
-      #players {
-        min-width: 300px;
-      }
-
-      #randomPlayer button {
-        background: #12c2e9;
-        border: none;
-        color: #fff;
-        padding: 10px;
-        font-size: 14px;
-        font-weight: bold;
-        margin-bottom: 10px;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: 0.2s;
-        width: 100%;
-      }
-
-      #clearData button {
-        background: #12c2e9;
-        border: none;
-        color: #fff;
-        padding: 10px;
-        font-size: 14px;
-        font-weight: bold;
-        margin-bottom: 10px;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: 0.2s;
-        width: 100%;
-      }
-
-      #randomPlayer button:hover {
-        background: #0f9cb8;
-      }
-
-      #clearData button:hover {
-        background: #0f9cb8;
-      }
-
-      #randomPlayerName {
-        font-style: italic;
-        margin-bottom: 20px;
-        color: #fff;
-      }
-
-      .delete-button {
-        background-color: #e74c3c;
-        color: #fff;
-        border: none;
-        border-radius: 50%;
-        padding: 6px 8px;
-        cursor: pointer;
-        font-size: 14px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: background 0.2s;
-        width: 30px;
-        height: 30px;
-      }
-
-      .delete-button:hover {
-        background-color: #c0392b;
-      }
-
-      #clearData {
-        cursor: pointer;
-      }
-
-      .player-photo {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        object-fit: cover;
-        margin-right: 10px;
-      }
-
-      /* Mobile responsiveness */
-      @media (max-width: 1200px) {
-        #container {
-          flex-wrap: wrap;
-          justify-content: center;
-        }
-        .team,
-        #players {
-          width: 90%;
-          margin-bottom: 30px;
-        }
-      }
-
-      @media (max-width: 768px) {
-        body {
-          padding: 15px;
-        }
-
-        .header {
-          flex-direction: column;
-          gap: 20px;
-          text-align: center;
-        }
-
-        .logo {
-          height: 100px;
-          width: 100px;
-        }
-
-        .main-heading {
-          font-size: 18px;
-        }
-
-        .team-header {
-          font-size: 12px;
-          padding: 6px;
-        }
-
-        .team-points span {
-          font-size: 12px;
-        }
-
-        .team-table th,
-        .team-table td {
-          font-size: 11px;
-          padding: 4px;
-        }
-
-        .player-card {
-          flex-direction: column;
-          align-items: flex-start;
-          font-size: 12px;
-        }
-
-        .delete-button {
-          margin-top: 6px;
-        }
-      }
-
-      @media (max-width: 480px) {
-        .main-heading {
-          font-size: 14px;
-        }
-
-        .team-table {
-          overflow-x: auto;
-          display: block;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <!-- Modal for Enlarged Player Photo -->
-    <div
-      id="photoModal"
-      style="
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.8);
-        justify-content: center;
-        align-items: center;
-        z-index: 9999;
-        flex-direction: column;
-      "
-    >
-      <img
-        id="modalImage"
-        src=""
-        style="
-          max-width: 90%;
-          max-height: 90%;
-          border-radius: 10px;
-          box-shadow: 0 0 20px #fff;
-          min-height: 50%;
-        "
-      />
-      <div style="margin-top: -10%">
-        <h1
-          style="
-            background: rgba(255, 76, 96, 0.8);
-            width: 70rem;
-            text-align: center;
-            font-size: 64px;
-            color: white;
-            -webkit-mask-image: linear-gradient(
-              to right,
-              transparent 0%,
-              black 20%,
-              black 80%,
-              transparent 100%
-            );
-            mask-image: linear-gradient(
-              to right,
-              transparent 0%,
-              black 20%,
-              black 80%,
-              transparent 100%
-            );
-            -webkit-mask-repeat: no-repeat;
-            mask-repeat: no-repeat;
-          "
-        ></h1>
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>UFL 2025 - Auction</title>
+      <link rel="stylesheet"
+         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+      <style>
+         @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rubik+Mono+One&display=swap');
+         @import url('https://fonts.googleapis.com/css2?family=Edu+QLD+Beginner:wght@400..700&family=Pacifico&family=Winky+Rough:ital,wght@0,300..900;1,300..900&display=swap');
+         body {
+         font-family: 'Winky Rough', sans-serif;
+         background: linear-gradient(to right, #5f2c82, #49a09d);
+         margin: 0;
+         padding: 30px;
+         color: #fff;
+         min-height: 100vh;
+         overflow-x: auto;
+         }
+         .header {
+         display: flex;
+         flex-direction: row;
+         align-items: center;
+         gap: 50px;
+         }
+         .logo {
+         /* height: 150px; */
+         width: 150px;
+         }
+         .main-heading {
+         font-family: 'Press Start 2P', cursive;
+         font-size: 28px;
+         text-align: center;
+         margin-bottom: 30px;
+         color: #ffdb58;
+         animation: flicker 1.5s infinite alternate;
+         text-shadow: 2px 2px 0 #000, 0 0 10px #ffdb58;
+         }
+         .team {
+         animation: slideIn 0.8s ease-in-out;
+         }
+         @keyframes slideIn {
+         from {
+         transform: translateY(30px);
+         opacity: 0;
+         }
+         to {
+         transform: translateY(0);
+         opacity: 1;
+         }
+         }
+         .player-card:hover {
+         background-color: #333;
+         transform: translateX(10px) scale(1.05);
+         box-shadow: 0 0 10px #12c2e9;
+         }
+         /* Flicker Animation */
+         @keyframes flicker {
+         0% {
+         opacity: 1;
+         text-shadow: 2px 2px 0 #000, 0 0 20px #ffdb58, 0 0 30px #ffdb58;
+         }
+         100% {
+         opacity: 0.8;
+         text-shadow: 2px 2px 0 #000, 0 0 5px #ffdb58;
+         }
+         }
+         #container {
+         display: flex;
+         flex-wrap: nowrap;
+         gap: 30px;
+         align-items: flex-start;
+         margin-top: 90px;
+         }
+         .team {
+         width: 280px;
+         background: #111;
+         border: 2px solid #ff4c60;
+         border-radius: 15px;
+         box-shadow: 0 0 15px rgba(255, 76, 96, 0.5);
+         padding: 15px;
+         transition: transform 0.3s ease;
+         }
+         .team:hover {
+         transform: scale(1.03);
+         }
+         .team-header {
+         font-family: 'Press Start 2P', cursive;
+         font-size: 16px;
+         text-align: center;
+         background: linear-gradient(90deg, #ff4c60, #ff9671);
+         padding: 10px;
+         border-radius: 8px;
+         margin-bottom: 15px;
+         color: #000;
+         }
+         .team-points {
+         display: flex;
+         flex-direction: column;
+         }
+         .team-points span {
+         display: flex;
+         margin-bottom: 6px;
+         font-size: 24px;
+         justify-content: space-between;
+         }
+         .team-content {
+         background-color: #222;
+         border: 2px dashed #ff4c60;
+         border-radius: 10px;
+         padding: 10px;
+         min-height: 50px;
+         text-align: center;
+         color: #aaa;
+         margin-bottom: 15px;
+         margin: 50px 0;
+         }
+         .team-table {
+         width: 100%;
+         border-collapse: collapse;
+         color: #fff;
+         font-size: 13px;
+         }
+         .team-table th,
+         .team-table td {
+         border: 1px solid #ff9671;
+         padding: 6px;
+         text-align: left;
+         }
+         .team-table th {
+         background: #ff9671;
+         color: #000;
+         }
+         .player-card {
+         background: #292929;
+         border: 2px solid #12c2e9;
+         border-radius: 10px;
+         padding: 10px;
+         margin: 8px 0;
+         cursor: grab;
+         transition: all 0.2s ease;
+         display: flex;
+         /* justify-content: space-between; */
+         align-items: center;
+         color: #fff;
+         font-size: 28px;
+         }
+         .list-title,
+         tr {
+         font-size: 22px;
+         }
+         .player-card:hover {
+         background-color: #333;
+         transform: translateX(5px);
+         }
+         .player-card.dragging {
+         opacity: 0.5;
+         border-style: dotted;
+         transform: rotate(2deg);
+         }
+         #players {
+         min-width: 300px;
+         }
+         #randomPlayer button {
+         background: #12c2e9;
+         border: none;
+         color: #fff;
+         padding: 10px;
+         font-size: 14px;
+         font-weight: bold;
+         margin-bottom: 10px;
+         border-radius: 8px;
+         cursor: pointer;
+         transition: 0.2s;
+         width: 100%;
+         }
+         #clearData button {
+         background: #12c2e9;
+         border: none;
+         color: #fff;
+         padding: 10px;
+         font-size: 14px;
+         font-weight: bold;
+         margin-bottom: 10px;
+         border-radius: 8px;
+         cursor: pointer;
+         transition: 0.2s;
+         width: 100%;
+         }
+         #randomPlayer button:hover {
+         background: #0f9cb8;
+         }
+         #clearData button:hover {
+         background: #0f9cb8;
+         }
+         #randomPlayerName {
+         font-style: italic;
+         margin-bottom: 20px;
+         color: #fff;
+         }
+         .delete-button {
+         background-color: #e74c3c;
+         color: #fff;
+         border: none;
+         border-radius: 50%;
+         padding: 6px 8px;
+         cursor: pointer;
+         font-size: 14px;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         transition: background 0.2s;
+         width: 30px;
+         height: 30px;
+         }
+         .delete-button:hover {
+         background-color: #c0392b;
+         }
+         #clearData {
+         cursor: pointer;
+         }
+         .player-photo {
+         width: 40px;
+         height: 40px;
+         border-radius: 50%;
+         object-fit: cover;
+         margin-right: 10px;
+         }
+         #current-player {
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         background: linear-gradient(145deg, #ff4c60, #ff9671);
+         border: 4px dashed #fff;
+         border-radius: 20px;
+         padding: 20px;
+         margin-bottom: 30px;
+         box-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
+         animation: glowPulse 2s ease-in-out infinite;
+         color: #000;
+         font-family: 'Rubik Mono One', sans-serif;
+         transition: transform 0.3s ease;
+         }
+         #current-player:hover {
+         transform: scale(1.02);
+         }
+         #current-player h2 {
+         font-size: 22px;
+         margin-bottom: 10px;
+         text-shadow: 2px 2px #fff;
+         }
+         #current-player img {
+         height: 400px;
+         width: 280px;
+         object-fit: cover;
+         border-radius: 15px;
+         border: 4px solid #fff;
+         margin-bottom: 15px;
+         box-shadow: 0 0 20px #ffdb58;
+         }
+         #current-player span {
+         font-size: 20px;
+         font-style: italic;
+         background: #fff;
+         padding: 10px 20px;
+         border-radius: 10px;
+         color: #000;
+         box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+         }
+         @keyframes glowPulse {
+         0% {
+         box-shadow: 0 0 15px #fff;
+         }
+         50% {
+         box-shadow: 0 0 30px #fff;
+         }
+         100% {
+         box-shadow: 0 0 15px #fff;
+         }
+         }
+         /* Mobile responsiveness */
+         @media (max-width: 1200px) {
+         #container {
+         flex-wrap: wrap;
+         justify-content: center;
+         }
+         .team,
+         #players {
+         width: 90%;
+         margin-bottom: 30px;
+         }
+         }
+         @media (max-width: 768px) {
+         body {
+         padding: 15px;
+         }
+         .header {
+         flex-direction: column;
+         gap: 20px;
+         text-align: center;
+         }
+         .logo {
+         height: 100px;
+         width: 100px;
+         }
+         .main-heading {
+         font-size: 18px;
+         }
+         .team-header {
+         font-size: 12px;
+         padding: 6px;
+         }
+         .team-points span {
+         font-size: 12px;
+         }
+         .team-table th,
+         .team-table td {
+         font-size: 11px;
+         padding: 4px;
+         }
+         .player-card {
+         flex-direction: column;
+         align-items: flex-start;
+         font-size: 12px;
+         }
+         .delete-button {
+         margin-top: 6px;
+         }
+         }
+         @media (max-width: 480px) {
+         .main-heading {
+         font-size: 14px;
+         }
+         .team-table {
+         overflow-x: auto;
+         display: block;
+         }
+         }
+      </style>
+   </head>
+   <body>
+      <!-- Modal for Enlarged Player Photo -->
+      <div id="photoModal" style="
+         display: none;
+         position: fixed;
+         top: 0;
+         left: 0;
+         width: 100%;
+         height: 100%;
+         background: rgba(0, 0, 0, 0.8);
+         justify-content: center;
+         align-items: center;
+         z-index: 9999;
+         flex-direction: column;
+         ">
+         <img id="modalImage" src style="
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            box-shadow: 0 0 20px #fff;
+            min-height: 50%;
+            " />
+         <div style="margin-top: -10%">
+            <h1 style="
+               background: rgba(255, 76, 96, 0.8);
+               width: 70rem;
+               text-align: center;
+               font-size: 64px;
+               color: white;
+               -webkit-mask-image: linear-gradient(
+               to right,
+               transparent 0%,
+               black 20%,
+               black 80%,
+               transparent 100%
+               );
+               mask-image: linear-gradient(
+               to right,
+               transparent 0%,
+               black 20%,
+               black 80%,
+               transparent 100%
+               );
+               -webkit-mask-repeat: no-repeat;
+               mask-repeat: no-repeat;
+               "></h1>
+         </div>
       </div>
-    </div>
-
-    <div class="header">
-      <img src="./UFLPics/ufl1.jpg" class="logo" />
-      <h1 class="main-heading">Ultimate Frisbee League (North Park - 2025)</h1>
-    </div>
-
-    <div id="container">
-      <div class="team" id="teamMayank">
-        <div
-          style="
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            margin-top: -25%;
-          "
-        >
-          <img
-            src="./UFLPics/Mayank1.jpg"
-            alt="Mayank"
-            height="100px"
-            width="100px"
-            style="border-radius: 50%"
-          />
-        </div>
-        <h2 class="team-header">Mayank</h2>
-        <div class="team-points">
-          <span>Points Remaining: <span id="pointsMayank">7000</span></span>
-          <span>Players Remaining: <span id="playersMayank">7</span></span>
-          <span>Max Bid: <span id="bidMayank">7300</span></span>
-        </div>
-        <div
-          class="team-content"
-          ondrop="drop(event)"
-          ondragover="allowDrop(event)"
-        >
-          <p>Drag players here</p>
-        </div>
-        <h3>Team Player List</h3>
-        <table class="team-table">
-          <thead>
-            <tr>
-              <th>Player</th>
-              <th>Points</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody id="teamMayankRoster">
-            <!-- Roster will be dynamically added here -->
-          </tbody>
-        </table>
+      <div class="header">
+         <img src="./UFLPics/ufl1.jpg" class="logo" />
+         <h1 class="main-heading">Ultimate Frisbee League (North Park -
+            2025)
+         </h1>
       </div>
-
-      <div class="team" id="teamHarsh">
-        <div
-          style="
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            margin-top: -25%;
-          "
-        >
-          <img
-            src="./UFLPics/Harsh.jpg"
-            alt="Harsh"
-            height="100px"
-            width="100px"
-            style="border-radius: 50%"
-          />
-        </div>
-        <h2 class="team-header">Harsh</h2>
-        <div class="team-points">
-          <span>Points Remaining: <span id="pointsHarsh">7000</span></span>
-          <span>Players Remaining: <span id="playersHarsh">7</span></span>
-          <span>Max Bid: <span id="bidHarsh">7300</span></span>
-        </div>
-        <div
-          class="team-content"
-          ondrop="drop(event)"
-          ondragover="allowDrop(event)"
-        >
-          <p>Drag players here</p>
-        </div>
-        <h3>Team Player List</h3>
-        <table class="team-table">
-          <thead>
-            <tr>
-              <th>Player</th>
-              <th>Points</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody id="teamHarshRoster">
-            <!-- Roster will be dynamically added here -->
-          </tbody>
-        </table>
+      <div id="container">
+         <div class="team" id="teamMayank">
+            <div style="
+               width: 100%;
+               display: flex;
+               justify-content: center;
+               margin-top: -25%;
+               ">
+               <img src="./UFLPics/Mayank1.jpg" alt="Mayank" height="100px"
+                  width="100px" style="border-radius: 50%" />
+            </div>
+            <h2 class="team-header">Mayank</h2>
+            <div class="team-points">
+               <span>Points Remaining: <span
+                  id="pointsMayank">7000</span></span>
+               <span>Players Remaining: <span
+                  id="playersMayank">7</span></span>
+               <span>Max Bid: <span id="bidMayank">7300</span></span>
+            </div>
+            <div class="team-content" ondrop="drop(event)"
+               ondragover="allowDrop(event)">
+               <p>Drag players here</p>
+            </div>
+            <h3 class="list-title">Team Player List</h3>
+            <table class="team-table">
+               <thead>
+                  <tr>
+                     <th>Player</th>
+                     <th>Points</th>
+                     <th>Action</th>
+                  </tr>
+               </thead>
+               <tbody id="teamMayankRoster">
+                  <!-- Roster will be dynamically added here -->
+               </tbody>
+            </table>
+         </div>
+         <div class="team" id="teamHarsh">
+            <div style="
+               width: 100%;
+               display: flex;
+               justify-content: center;
+               margin-top: -25%;
+               ">
+               <img src="./UFLPics/Harsh.jpg" alt="Harsh" height="100px"
+                  width="100px" style="border-radius: 50%" />
+            </div>
+            <h2 class="team-header">Harsh</h2>
+            <div class="team-points">
+               <span>Points Remaining: <span
+                  id="pointsHarsh">7000</span></span>
+               <span>Players Remaining: <span
+                  id="playersHarsh">7</span></span>
+               <span>Max Bid: <span id="bidHarsh">7300</span></span>
+            </div>
+            <div class="team-content" ondrop="drop(event)"
+               ondragover="allowDrop(event)">
+               <p>Drag players here</p>
+            </div>
+            <h3>Team Player List</h3>
+            <table class="team-table">
+               <thead>
+                  <tr>
+                     <th>Player</th>
+                     <th>Points</th>
+                     <th>Action</th>
+                  </tr>
+               </thead>
+               <tbody id="teamHarshRoster">
+                  <!-- Roster will be dynamically added here -->
+               </tbody>
+            </table>
+         </div>
+         <div class="team" id="teamMani">
+            <div style="
+               width: 100%;
+               display: flex;
+               justify-content: center;
+               margin-top: -25%;
+               ">
+               <img src="./UFLPics/Mani.jpg" alt="Mani" height="100px"
+                  width="100px" style="border-radius: 50%" />
+            </div>
+            <h2 class="team-header">Mani</h2>
+            <div class="team-points">
+               <span>Points Remaining: <span
+                  id="pointsMani">7000</span></span>
+               <span>Players Remaining: <span
+                  id="playersMani">7</span></span>
+               <span>Max Bid: <span id="bidMani">7300</span></span>
+            </div>
+            <div class="team-content" ondrop="drop(event)"
+               ondragover="allowDrop(event)">
+               <p>Drag players here</p>
+            </div>
+            <h3>Team Player List</h3>
+            <table class="team-table">
+               <thead>
+                  <tr>
+                     <th>Player</th>
+                     <th>Points</th>
+                     <th>Action</th>
+                  </tr>
+               </thead>
+               <tbody id="teamManiRoster">
+                  <!-- Roster will be dynamically added here -->
+               </tbody>
+            </table>
+         </div>
+         <div class="team" id="teamHari">
+            <div style="
+               width: 100%;
+               display: flex;
+               justify-content: center;
+               margin-top: -25%;
+               ">
+               <img src="./UFLPics/Hari1.jpg" alt="Hari" height="100px"
+                  width="100px" style="border-radius: 50%" />
+            </div>
+            <h2 class="team-header">Hari</h2>
+            <div class="team-points">
+               <span>Points Remaining: <span
+                  id="pointsHari">7000</span></span>
+               <span>Players Remaining: <span
+                  id="playersHari">7</span></span>
+               <span>Max Bid: <span id="bidHari">7300</span></span>
+            </div>
+            <div class="team-content" ondrop="drop(event)"
+               ondragover="allowDrop(event)">
+               <p>Drag players here</p>
+            </div>
+            <h3>Team Player List</h3>
+            <table class="team-table">
+               <thead>
+                  <tr>
+                     <th>Player</th>
+                     <th>Points</th>
+                     <th>Action</th>
+                  </tr>
+               </thead>
+               <tbody id="teamHariRoster">
+                  <!-- Roster will be dynamically added here -->
+               </tbody>
+            </table>
+         </div>
+         <div id="players">
+            <div id="current-player" style="display: none;">
+               <h2>Current Player</h2>
+               <img src alt="Current Player Photo" />
+            </div>
+            <h2>Available Players</h2>
+            <!-- <div id="randomPlayer">
+               <button onclick="generateRandomPlayer()">
+                   Generate Random Player
+               </button>
+               <div id="randomPlayerName"></div>
+               </div> -->
+            <div id="player-photo-display"></div>
+            <div id="playerList">
+               <!-- Player list will be dynamically added here -->
+            </div>
+            <div id="clearData">
+               <button>Reset Data</button>
+            </div>
+         </div>
       </div>
-
-      <div class="team" id="teamMani">
-        <div
-          style="
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            margin-top: -25%;
-          "
-        >
-          <img
-            src="./UFLPics/Mani.jpg"
-            alt="Mani"
-            height="100px"
-            width="100px"
-            style="border-radius: 50%"
-          />
-        </div>
-        <h2 class="team-header">Mani</h2>
-        <div class="team-points">
-          <span>Points Remaining: <span id="pointsMani">7000</span></span>
-          <span>Players Remaining: <span id="playersMani">7</span></span>
-          <span>Max Bid: <span id="bidMani">7300</span></span>
-        </div>
-        <div
-          class="team-content"
-          ondrop="drop(event)"
-          ondragover="allowDrop(event)"
-        >
-          <p>Drag players here</p>
-        </div>
-        <h3>Team Player List</h3>
-        <table class="team-table">
-          <thead>
-            <tr>
-              <th>Player</th>
-              <th>Points</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody id="teamManiRoster">
-            <!-- Roster will be dynamically added here -->
-          </tbody>
-        </table>
-      </div>
-
-      <div class="team" id="teamHari">
-        <div
-          style="
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            margin-top: -25%;
-          "
-        >
-          <img
-            src="./UFLPics/Hari1.jpg"
-            alt="Hari"
-            height="100px"
-            width="100px"
-            style="border-radius: 50%"
-          />
-        </div>
-        <h2 class="team-header">Hari</h2>
-        <div class="team-points">
-          <span>Points Remaining: <span id="pointsHari">7000</span></span>
-          <span>Players Remaining: <span id="playersHari">7</span></span>
-          <span>Max Bid: <span id="bidHari">7300</span></span>
-        </div>
-        <div
-          class="team-content"
-          ondrop="drop(event)"
-          ondragover="allowDrop(event)"
-        >
-          <p>Drag players here</p>
-        </div>
-        <h3>Team Player List</h3>
-        <table class="team-table">
-          <thead>
-            <tr>
-              <th>Player</th>
-              <th>Points</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody id="teamHariRoster">
-            <!-- Roster will be dynamically added here -->
-          </tbody>
-        </table>
-      </div>
-
-      <div id="players">
-        <h2>Available Players</h2>
-        <div id="randomPlayer">
-          <button onclick="generateRandomPlayer()">
-            Generate Random Player
-          </button>
-          <div id="randomPlayerName"></div>
-        </div>
-
-        <div id="playerList">
-          <!-- Player list will be dynamically added here -->
-        </div>
-        <div id="clearData">
-          <button>Reset Data</button>
-        </div>
-      </div>
-    </div>
-
-    <script>
-      const defaultTeams = {
-        teamMayank: { name: 'Mayank', points: 7000, players: [] },
-        teamHarsh: { name: 'Harsh', points: 7000, players: [] },
-        teamMani: { name: 'Mani', points: 7000, players: [] },
-        teamHari: { name: 'Hari', points: 7000, players: [] },
-      };
-
-      const picsBase = './UFLPics';
-
-      const initialPlayers = [
-      {
-          id: 'player1',
-          name: 'Ligin',
-          photo: 'Ligin.jpg',
-        },
-        {
-          id: 'player2',
-          name: 'Akshay',
-          photo: 'Akshay.jpg',
-        },
-        {
-          id: 'player3',
-          name: 'Deepak',
-          photo: 'Deepak.jpg',
-        },
-        {
-          id: 'player4',
-          name: 'Apurv',
-          photo: 'Apurv.jpg',
-        },
-        {
-          id: 'player5',
-          name: 'Prateek',
-          photo: 'Prateek.jpg',
-        },
-        {
-          id: 'player6',
-          name: 'Ajitesh',
-          photo: 'Ajitesh.jpg',
-        },
-        {
-          id: 'player7',
-          name: 'Aditya Deshmukh',
-          photo: 'Aditya.jpg',
-        },
-        {
-          id: 'player8',
-          name: 'Sravan',
-          photo: 'SRA1.jpg',
-        },
-        {
-          id: 'player9',
-          name: 'Venkatesh',
-          photo: 'Venkatesh.jpg',
-        },
-        {
-          id: 'player10',
-          name: 'Tapan',
-          photo: 'Tapan.JPG',
-        },
-        {
-          id: 'player11',
-          name: 'Prathamesh',
-          photo: 'Prathamesh_Save.jpg',
-        },
-        {
-          id: 'player12',
-          name: 'Aditya Sant',
-          photo: 'Aditya_Sant.jpg',
-        },
-        {
-          id: 'player13',
-          name: 'Saurabh',
-          photo: 'Saurabh.jpg',
-        },
-        {
-          id: 'player14',
-          name: 'Ankit Jain',
-          photo: 'Ankit.jpg',
-        },
-        {
-          id: 'player15',
-          name: 'Nitin',
-          photo: 'Nitin.JPG',
-        },
-        {
-          id: 'player16',
-          name: 'Hrushabh',
-          photo: 'Hrushabh.jpg',
-        },
-        {
-          id: 'player17',
-          name: 'Mohit',
-          photo: 'mohit.jpg',
-        },
-        {
-          id: 'player18',
-          name: 'Nishith',
-          photo: 'Nishith.jpg',
-        },
-        {
-          id: 'player19',
-          name: 'Devashish',
-          photo: 'Dev.jpg',
-        },
-        {
-          id: 'player20',
-          name: 'Mayuresh',
-          photo: 'Mayuresh.jpg',
-        },
-        {
-          id: 'player21',
-          name: 'Siddharth',
-          photo: 'Sid.jpg',
-        },
-        {
-          id: 'player22',
-          name: 'Shiva',
-          photo: 'Shiva.jpg',
-        },
-        {
-          id: 'player23',
-          name: 'Pradeep Reddy',
-          photo: 'Pradeep.JPG',
-        },
-        {
-          id: 'player24',
-          name: 'Daksha',
-          photo: 'Daksha.jpeg',
-        },
-        {
-          id: 'player25',
-          name: 'Manan',
-          photo: 'Manan.JPG',
-        },
-        {
-          id: 'player26',
-          name: 'Vaanya',
-          photo: 'Vaanya.jpg',
-        },
-        {
-          id: 'player27',
-          name: 'Nihar',
-          photo: 'Nihar.jpg',
-        },
-        {
-          id: 'player28',
-          name: 'Kalyani',
-          photo: 'Kalyani_Jagdale.jpg',
-        },
-      ];
-
-      function getPhotoById(playerId) {
-  const player = initialPlayers.find(p => p.id === playerId);
-  return player ? player.photo : null;
-}
-
-      // Open modal with clicked photo
-      document.addEventListener('click', function (e) {
-        if (e.target.classList.contains('player-photo')) {
-          const modal = document.getElementById('photoModal');
-          const modalImage = document.getElementById('modalImage');
-          const modalName = document.querySelector('h1');
-          modalName.innerText = e.target.alt;
-          modalImage.src = e.target.src;
-          modal.style.display = 'flex';
-        }
-      });
-
-      // Close modal when clicking outside image
-      document
-        .getElementById('photoModal')
-        .addEventListener('click', function (e) {
-          if (e.target.id === 'photoModal') {
-            this.style.display = 'none';
-          }
-        });
-
-      let teams = JSON.parse(localStorage.getItem('teams')) || defaultTeams;
-      let availablePlayers =
-        JSON.parse(localStorage.getItem('availablePlayers')) || initialPlayers;
-
-      function allowDrop(ev) {
-        ev.preventDefault();
-      }
-
-      function drag(ev) {
-        ev.dataTransfer.setData('text/plain', ev.target.id);
-        ev.target.classList.add('dragging');
-      }
-
-      function drop(ev) {
-        ev.preventDefault();
-        const playerId = ev.dataTransfer.getData('text/plain');
-        const playerElement = document.getElementById(playerId);
-        const teamContent = ev.target.closest('.team-content');
-        if (teamContent && !teamContent.contains(playerElement)) {
-          const teamId = teamContent.parentElement.id;
-          const playerName = playerElement.textContent;
-
-          const points = parseInt(
-            prompt(`Enter points for ${playerName} (minimum 100):`)
-          );
-          if (isNaN(points) || points < 100) {
-            alert('Invalid points. Minimum bid is 100. Try again.');
-            playerElement.classList.remove('dragging');
-            return;
-          }
-
-          const pointsElement = document.getElementById(
-            `points${teamId.charAt(4).toUpperCase() + teamId.slice(5)}`
-          );
-          if (!pointsElement) {
-            alert('Error: Points element not found.');
-            playerElement.classList.remove('dragging');
-            return;
-          }
-
-          if (teams[teamId].points >= points) {
-            teams[teamId].points -= points;
-            pointsElement.textContent = teams[teamId].points;
-
-            // Add player to team roster table
-            const tableBody = document.getElementById(`${teamId}Roster`);
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                                <td><div style="display: flex; align-items: center;">${playerName}</div></td>
-                                <td><div style="display: flex; align-items: center;">${points}</div></td>
-                                <td><div style="display: flex; align-items: center;"><button class="delete-button" onclick="removePlayerFromTeam('${playerId}', '${teamId}')">
-          <i class="fas fa-trash-alt"></i>
-        </button></div></td>
-
-
-                            `;
-            tableBody.appendChild(row);
-
-            // Add player to the team's players list
-            teams[teamId].players.push({
-              id: playerId,
-              name: playerName,
-              points: points,
-            });
-
-            // Remove the player from availablePlayers
-            availablePlayers = availablePlayers.filter(
-              (player) => player.id !== playerId
-            );
-
-            // Update the localStorage
-            localStorage.setItem('teams', JSON.stringify(teams));
-            localStorage.setItem(
-              'availablePlayers',
-              JSON.stringify(availablePlayers)
-            );
-
-            document.getElementById(
-              `players${teams[teamId].name}`
-            ).textContent =
-              7 -
-              JSON.parse(localStorage.getItem('teams'))[
-                `team${teams[teamId].name}`
-              ].players.length;
-
-            document.getElementById(`bid${teams[teamId].name}`).textContent =
-              JSON.parse(localStorage.getItem('teams'))[
-                `team${teams[teamId].name}`
-              ].points -
-              (7 -
-                JSON.parse(localStorage.getItem('teams'))[
-                  `team${teams[teamId].name}`
-                ].players.length -
-                1) *
-                100;
-
-            if (
-              JSON.parse(localStorage.getItem('teams'))[
-                `team${teams[teamId].name}`
-              ].players.length === 7
-            ) {
-              document.getElementById(
-                `team${
-                  JSON.parse(localStorage.getItem('teams'))[
-                    `team${teams[teamId].name}`
-                  ].name
-                }`
-              ).style.backgroundColor = '#ff000042';
-            }
-            // Update the player list
-            updatePlayerList();
-
-            playerElement.classList.remove('dragging');
-          } else {
-            alert('Not enough points.');
-          }
-        }
-      }
-
-      function generateRandomPlayer() {
-        if (availablePlayers.length === 0) {
-          alert('No more players available.');
-          return;
-        }
-        const randomIndex = Math.floor(Math.random() * availablePlayers.length);
-        const randomPlayer = availablePlayers[randomIndex];
-        document.getElementById(
-          'randomPlayerName'
-        ).textContent = `Current Player for Bidding: ${randomPlayer.name}`;
-      }
-
-      function updatePlayerList() {
-        const playerList = document.getElementById('playerList');
-        playerList.innerHTML = '';
-        availablePlayers.forEach((player) => {
-          const playerCard = document.createElement('div');
-          playerCard.className = 'player-card';
-          playerCard.textContent = player.name;
-          playerCard.id = player.id;
-          playerCard.draggable = true;
-          playerCard.innerHTML = `
-        <img src="${picsBase}/${player.photo}" alt="${player.name}" class="player-photo" />
-        <span>${player.name}</span>
-      `;
-          playerCard.ondragstart = drag;
-          playerCard.ondragend = () => playerCard.classList.remove('dragging');
-          playerList.appendChild(playerCard);
-        });
-      }
-
-      function removePlayerFromTeam(playerId, teamId) {
-        const team = teams[teamId];
-        const playerIndex = team.players.findIndex(
-          (player) => player.id === playerId
-        );
-        if (playerIndex === -1) {
-          alert('Player not found in the team.');
-          return;
-        }
-
-        const player = team.players[playerIndex];
-        console.log('player', player)
-        const points = player.points;
-        const playerName = player.name;
-
-        // Remove player from the team's players list
-        team.players.splice(playerIndex, 1);
-
-        const photo = getPhotoById(playerId);
-
-
-        // Add player back to availablePlayers
-        availablePlayers.push({ id: playerId, name: playerName, photo });
-
-        // Update points for the team
-        team.points += points;
-        document.getElementById(
-          `points${teamId.charAt(4).toUpperCase() + teamId.slice(5)}`
-        ).textContent = team.points;
-
-        // Remove the player from the team's roster table
-        const tableBody = document.getElementById(`${teamId}Roster`);
-        const rows = Array.from(tableBody.rows);
-        rows.forEach((row) => {
-          if (row.cells[0].textContent === playerName) {
-            tableBody.removeChild(row);
-          }
-        });
-
-        // Update the localStorage
-        localStorage.setItem('teams', JSON.stringify(teams));
-        localStorage.setItem(
-          'availablePlayers',
-          JSON.stringify(availablePlayers)
-        );
-
-        document.getElementById(`players${teams[teamId].name}`).textContent =
-          7 -
-          JSON.parse(localStorage.getItem('teams'))[`team${teams[teamId].name}`]
-            .players.length;
-
-        document.getElementById(`bid${teams[teamId].name}`).textContent =
-          JSON.parse(localStorage.getItem('teams'))[`team${teams[teamId].name}`]
-            .points -
-          (7 -
-            JSON.parse(localStorage.getItem('teams'))[
-              `team${teams[teamId].name}`
-            ].players.length -
-            1) *
-            100;
-
-        if (
-          JSON.parse(localStorage.getItem('teams'))[`team${teams[teamId].name}`]
-            .players.length === 7
-        ) {
-          document.getElementById(
-            `team${
-              JSON.parse(localStorage.getItem('teams'))[
-                `team${teams[teamId].name}`
-              ].name
-            }`
-          ).style.backgroundColor = '#bfebdc';
-        }
-        // Update the player list
-        updatePlayerList();
-      }
-
-      function loadTeams() {
-        for (const teamId in teams) {
-          const team = teams[teamId];
-          const pointsElement = document.getElementById(
-            `points${teamId.charAt(4).toUpperCase() + teamId.slice(5)}`
-          );
-          const playersRemaining = document.getElementById(
-            `players${teamId.charAt(4).toUpperCase() + teamId.slice(5)}`
-          );
-          const maxBid = document.getElementById(
-            `bid${teamId.charAt(4).toUpperCase() + teamId.slice(5)}`
-          );
-
-          pointsElement.textContent = team.points;
-          playersRemaining.textContent = 7 - team.players.length;
-          maxBid.textContent =
-            parseInt(pointsElement.textContent) -
-            (7 - team.players.length - 1) * 100;
-          const tableBody = document.getElementById(`${teamId}Roster`);
-          tableBody.innerHTML = '';
-          team.players.forEach((player) => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                                <td><div style="display: flex; align-items: center;">${player.name}</div></td>
-                                <td><div style="display: flex; align-items: center;">${player.points}</div></td>
-                                <td><div style="display: flex; align-items: center;"><button class="delete-button" onclick="removePlayerFromTeam('${player.id}', '${teamId}')"><i class="fas fa-trash-alt"></i></button></div></td>
-                            `;
-            tableBody.appendChild(row);
-          });
-        }
-      }
-
-      const clearData = document.getElementById('clearData');
-
-      clearData.addEventListener('click', () => {
-        const confirmClear = confirm(
-          'Are you sure you want to reset everything? This cannot be undone.'
-        );
-        if (confirmClear) {
-          window.localStorage.clear();
-          window.location.reload();
-        }
-      });
-
-      window.onload = () => {
-        updatePlayerList();
-        loadTeams();
-      };
-    </script>
-  </body>
+      <script>
+         const defaultTeams = {
+             teamMayank: {
+                 name: 'Mayank',
+                 points: 7000,
+                 players: []
+             },
+             teamHarsh: {
+                 name: 'Harsh',
+                 points: 7000,
+                 players: []
+             },
+             teamMani: {
+                 name: 'Mani',
+                 points: 7000,
+                 players: []
+             },
+             teamHari: {
+                 name: 'Hari',
+                 points: 7000,
+                 players: []
+             },
+         };
+         
+         const picsBase = './UFLPics';
+         
+         const initialPlayers = [{
+                 id: 'player1',
+                 name: 'Ligin',
+                 photo: 'Ligin.jpg',
+             },
+             {
+                 id: 'player2',
+                 name: 'Akshay',
+                 photo: 'Akshay.jpg',
+             },
+             {
+                 id: 'player3',
+                 name: 'Deepak',
+                 photo: 'Deepak.jpg',
+             },
+             {
+                 id: 'player4',
+                 name: 'Apurv',
+                 photo: 'Apurv.jpg',
+             },
+             {
+                 id: 'player5',
+                 name: 'Prateek',
+                 photo: 'Prateek.jpg',
+             },
+             {
+                 id: 'player6',
+                 name: 'Ajitesh',
+                 photo: 'Ajitesh.jpg',
+             },
+             {
+                 id: 'player7',
+                 name: 'Aditya Deshmukh',
+                 photo: 'Aditya.jpg',
+             },
+             {
+                 id: 'player8',
+                 name: 'Sravan',
+                 photo: 'SRA1.jpg',
+             },
+             {
+                 id: 'player9',
+                 name: 'Venkatesh',
+                 photo: 'Venkatesh.jpg',
+             },
+             {
+                 id: 'player10',
+                 name: 'Tapan',
+                 photo: 'Tapan.JPG',
+             },
+             {
+                 id: 'player11',
+                 name: 'Prathamesh',
+                 photo: 'Prathamesh_Save.jpg',
+             },
+             {
+                 id: 'player12',
+                 name: 'Aditya Sant',
+                 photo: 'Aditya_Sant.jpg',
+             },
+             {
+                 id: 'player13',
+                 name: 'Saurabh',
+                 photo: 'Saurabh.jpg',
+             },
+             {
+                 id: 'player14',
+                 name: 'Ankit Jain',
+                 photo: 'Ankit.jpg',
+             },
+             {
+                 id: 'player15',
+                 name: 'Nitin',
+                 photo: 'Nitin.JPG',
+             },
+             {
+                 id: 'player16',
+                 name: 'Hrushabh',
+                 photo: 'Hrushabh.jpg',
+             },
+             {
+                 id: 'player17',
+                 name: 'Mohit',
+                 photo: 'mohit.jpg',
+             },
+             {
+                 id: 'player18',
+                 name: 'Nishith',
+                 photo: 'Nishith.jpg',
+             },
+             {
+                 id: 'player19',
+                 name: 'Devashish',
+                 photo: 'Dev.jpg',
+             },
+             {
+                 id: 'player20',
+                 name: 'Mayuresh',
+                 photo: 'Mayuresh.jpg',
+             },
+             {
+                 id: 'player21',
+                 name: 'Siddharth',
+                 photo: 'Sid.jpg',
+             },
+             {
+                 id: 'player22',
+                 name: 'Shiva',
+                 photo: 'Shiva.jpg',
+             },
+             {
+                 id: 'player23',
+                 name: 'Pradeep Reddy',
+                 photo: 'Pradeep.JPG',
+             },
+             {
+                 id: 'player24',
+                 name: 'Daksha',
+                 photo: 'Daksha.jpeg',
+             },
+             {
+                 id: 'player25',
+                 name: 'Manan',
+                 photo: 'Manan.JPG',
+             },
+             {
+                 id: 'player26',
+                 name: 'Vaanya',
+                 photo: 'Vaanya.jpg',
+             },
+             {
+                 id: 'player27',
+                 name: 'Nihar',
+                 photo: 'Nihar.jpg',
+             },
+             {
+                 id: 'player28',
+                 name: 'Kalyani',
+                 photo: 'Kalyani_Jagdale.jpg',
+             },
+         ];
+         
+         function getPhotoById(playerId) {
+             const player = initialPlayers.find(p => p.id === playerId);
+             return player ? player.photo : null;
+         }
+         
+         document.addEventListener('click', function(e) {
+         if (e.target.classList.contains('player-photo')) {
+         const container = document.querySelector('#current-player');
+         const frame = container.querySelector('img');
+         if (frame) {
+             frame.src = e.target.src;
+         } else {
+             const newImg = document.createElement('img');
+             newImg.src = e.target.src;
+             container.appendChild(newImg);
+         }
+         container.style.display = 'block';
+         }
+         });
+         
+         
+         // document.addEventListener('click', function(e) {
+         //     if (e.target.classList.contains('player-photo')) {
+         //         const container = document.querySelector('[id="current-player"]');
+         //         const frame = document.querySelector('[id="current-player"]>img');
+         //         frame.src = e.target.src;
+         //         container.style.display = 'block';
+         //     }
+         // });
+         
+         // Open modal with clicked photo
+         // document.addEventListener('click', function(e) {
+         //     if (e.target.classList.contains('player-photo')) {
+         //         const modal = document.getElementById('photoModal');
+         //         const modalImage = document.getElementById('modalImage');
+         //         const modalName = document.querySelector('h1');
+         //         modalName.innerText = e.target.alt;
+         //         modalImage.src = e.target.src;
+         //         modal.style.display = 'flex';
+         //     }
+         // });
+         
+         // Close modal when clicking outside image
+         // document
+         //     .getElementById('photoModal')
+         //     .addEventListener('click', function(e) {
+         //         if (e.target.id === 'photoModal') {
+         //             this.style.display = 'none';
+         //         }
+         //     });
+         
+         let teams = JSON.parse(localStorage.getItem('teams')) || defaultTeams;
+         let availablePlayers =
+             JSON.parse(localStorage.getItem('availablePlayers')) || initialPlayers;
+         
+         function allowDrop(ev) {
+             ev.preventDefault();
+         }
+         
+         function drag(ev) {
+             ev.dataTransfer.setData('text/plain', ev.target.id);
+             ev.target.classList.add('dragging');
+         }
+         
+         function drop(ev) {
+             ev.preventDefault();
+             const playerId = ev.dataTransfer.getData('text/plain');
+             const playerElement = document.getElementById(playerId);
+             const teamContent = ev.target.closest('.team-content');
+             if (teamContent && !teamContent.contains(playerElement)) {
+                 const teamId = teamContent.parentElement.id;
+                 const playerName = playerElement.textContent;
+         
+                 const points = parseInt(
+                     prompt(`Enter points for ${playerName} (minimum 100):`)
+                 );
+                 if (isNaN(points) || points < 100) {
+                     alert('Invalid points. Minimum bid is 100. Try again.');
+                     playerElement.classList.remove('dragging');
+                     return;
+                 }
+         
+                 const pointsElement = document.getElementById(
+                     `points${teamId.charAt(4).toUpperCase() + teamId.slice(5)}`
+                 );
+                 if (!pointsElement) {
+                     alert('Error: Points element not found.');
+                     playerElement.classList.remove('dragging');
+                     return;
+                 }
+         
+                 if (teams[teamId].points >= points) {
+                     teams[teamId].points -= points;
+                     pointsElement.textContent = teams[teamId].points;
+         
+                     // Add player to team roster table
+                     const tableBody = document.getElementById(`${teamId}Roster`);
+                     const row = document.createElement('tr');
+                     row.innerHTML = `
+                                 <td><div style="display: flex; align-items: center;">${playerName}</div></td>
+                                 <td><div style="display: flex; align-items: center;">${points}</div></td>
+                                 <td><div style="display: flex; align-items: center;"><button class="delete-button" onclick="removePlayerFromTeam('${playerId}', '${teamId}')">
+           <i class="fas fa-trash-alt"></i>
+         </button></div></td>
+         
+         
+                             `;
+                     tableBody.appendChild(row);
+         
+                     // Add player to the team's players list
+                     teams[teamId].players.push({
+                         id: playerId,
+                         name: playerName,
+                         points: points,
+                     });
+         
+                     // Remove the player from availablePlayers
+                     availablePlayers = availablePlayers.filter(
+                         (player) => player.id !== playerId
+                     );
+         
+                     // Update the localStorage
+                     localStorage.setItem('teams', JSON.stringify(teams));
+                     localStorage.setItem(
+                         'availablePlayers',
+                         JSON.stringify(availablePlayers)
+                     );
+         
+                     document.getElementById(
+                             `players${teams[teamId].name}`
+                         ).textContent =
+                         7 -
+                         JSON.parse(localStorage.getItem('teams'))[
+                             `team${teams[teamId].name}`
+                         ].players.length;
+         
+                     document.getElementById(`bid${teams[teamId].name}`).textContent =
+                         JSON.parse(localStorage.getItem('teams'))[
+                             `team${teams[teamId].name}`
+                         ].points -
+                         (7 -
+                             JSON.parse(localStorage.getItem('teams'))[
+                                 `team${teams[teamId].name}`
+                             ].players.length -
+                             1) *
+                         100;
+         
+                     if (
+                         JSON.parse(localStorage.getItem('teams'))[
+                             `team${teams[teamId].name}`
+                         ].players.length === 7
+                     ) {
+                         document.getElementById(
+                             `team${
+                   JSON.parse(localStorage.getItem('teams'))[
+                     `team${teams[teamId].name}`
+                   ].name
+                 }`
+                         ).style.backgroundColor = '#ff000042';
+                     }
+                     // Update the player list
+                     updatePlayerList();
+         
+                     playerElement.classList.remove('dragging');
+                 } else {
+                     alert('Not enough points.');
+                 }
+             }
+         }
+         
+         function generateRandomPlayer() {
+             if (availablePlayers.length === 0) {
+                 alert('No more players available.');
+                 return;
+             }
+             const randomIndex = Math.floor(Math.random() * availablePlayers.length);
+             const randomPlayer = availablePlayers[randomIndex];
+             document.getElementById(
+                 'randomPlayerName'
+             ).textContent = `Current Player for Bidding: ${randomPlayer.name}`;
+         }
+         
+         function updatePlayerList() {
+             const playerList = document.getElementById('playerList');
+             playerList.innerHTML = '';
+             availablePlayers.forEach((player) => {
+                 const playerCard = document.createElement('div');
+                 playerCard.className = 'player-card';
+                 playerCard.textContent = player.name;
+                 playerCard.id = player.id;
+                 playerCard.draggable = true;
+                 playerCard.innerHTML = `
+         <img src="${picsBase}/${player.photo}" alt="${player.name}" class="player-photo" />
+         <span>${player.name}</span>
+         `;
+                 playerCard.ondragstart = drag;
+                 playerCard.ondragend = () => playerCard.classList.remove('dragging');
+                 playerList.appendChild(playerCard);
+             });
+         }
+         
+         function removePlayerFromTeam(playerId, teamId) {
+             const team = teams[teamId];
+             const playerIndex = team.players.findIndex(
+                 (player) => player.id === playerId
+             );
+             if (playerIndex === -1) {
+                 alert('Player not found in the team.');
+                 return;
+             }
+         
+             const player = team.players[playerIndex];
+             console.log('player', player)
+             const points = player.points;
+             const playerName = player.name;
+         
+             // Remove player from the team's players list
+             team.players.splice(playerIndex, 1);
+         
+             const photo = getPhotoById(playerId);
+         
+         
+             // Add player back to availablePlayers
+             availablePlayers.push({
+                 id: playerId,
+                 name: playerName,
+                 photo
+             });
+         
+             // Update points for the team
+             team.points += points;
+             document.getElementById(
+                 `points${teamId.charAt(4).toUpperCase() + teamId.slice(5)}`
+             ).textContent = team.points;
+         
+             // Remove the player from the team's roster table
+             const tableBody = document.getElementById(`${teamId}Roster`);
+             const rows = Array.from(tableBody.rows);
+             rows.forEach((row) => {
+                 if (row.cells[0].textContent === playerName) {
+                     tableBody.removeChild(row);
+                 }
+             });
+         
+             // Update the localStorage
+             localStorage.setItem('teams', JSON.stringify(teams));
+             localStorage.setItem(
+                 'availablePlayers',
+                 JSON.stringify(availablePlayers)
+             );
+         
+             document.getElementById(`players${teams[teamId].name}`).textContent =
+                 7 -
+                 JSON.parse(localStorage.getItem('teams'))[`team${teams[teamId].name}`]
+                 .players.length;
+         
+             document.getElementById(`bid${teams[teamId].name}`).textContent =
+                 JSON.parse(localStorage.getItem('teams'))[`team${teams[teamId].name}`]
+                 .points -
+                 (7 -
+                     JSON.parse(localStorage.getItem('teams'))[
+                         `team${teams[teamId].name}`
+                     ].players.length -
+                     1) *
+                 100;
+         
+             if (
+                 JSON.parse(localStorage.getItem('teams'))[`team${teams[teamId].name}`]
+                 .players.length === 7
+             ) {
+                 document.getElementById(
+                     `team${
+               JSON.parse(localStorage.getItem('teams'))[
+                 `team${teams[teamId].name}`
+               ].name
+             }`
+                 ).style.backgroundColor = '#bfebdc';
+             }
+             // Update the player list
+             updatePlayerList();
+         }
+         
+         function loadTeams() {
+             for (const teamId in teams) {
+                 const team = teams[teamId];
+                 const pointsElement = document.getElementById(
+                     `points${teamId.charAt(4).toUpperCase() + teamId.slice(5)}`
+                 );
+                 const playersRemaining = document.getElementById(
+                     `players${teamId.charAt(4).toUpperCase() + teamId.slice(5)}`
+                 );
+                 const maxBid = document.getElementById(
+                     `bid${teamId.charAt(4).toUpperCase() + teamId.slice(5)}`
+                 );
+         
+                 pointsElement.textContent = team.points;
+                 playersRemaining.textContent = 7 - team.players.length;
+                 maxBid.textContent =
+                     parseInt(pointsElement.textContent) -
+                     (7 - team.players.length - 1) * 100;
+                 const tableBody = document.getElementById(`${teamId}Roster`);
+                 tableBody.innerHTML = '';
+                 team.players.forEach((player) => {
+                     const row = document.createElement('tr');
+                     row.innerHTML = `
+                                 <td><div style="display: flex; align-items: center;">${player.name}</div></td>
+                                 <td><div style="display: flex; align-items: center;">${player.points}</div></td>
+                                 <td><div style="display: flex; align-items: center;"><button class="delete-button" onclick="removePlayerFromTeam('${player.id}', '${teamId}')"><i class="fas fa-trash-alt"></i></button></div></td>
+                             `;
+                     tableBody.appendChild(row);
+                 });
+             }
+         }
+         
+         const clearData = document.getElementById('clearData');
+         
+         clearData.addEventListener('click', () => {
+             const confirmClear = confirm(
+                 'Are you sure you want to reset everything? This cannot be undone.'
+             );
+             if (confirmClear) {
+                 window.localStorage.clear();
+                 window.location.reload();
+             }
+         });
+         
+         window.onload = () => {
+             updatePlayerList();
+             loadTeams();
+         };
+      </script>
+   </body>
 </html>
